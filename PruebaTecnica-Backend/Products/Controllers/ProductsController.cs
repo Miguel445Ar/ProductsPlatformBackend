@@ -11,7 +11,7 @@ namespace PruebaTecnica_Backend.Products.Controllers
 {
     [ApiController]
     [Route("/api/v1/[controller]")]
-    [SwaggerTag("Create, Read And Update Shipments")]
+    [SwaggerTag("Create, Read And Update Products")]
     [Produces(MediaTypeNames.Application.Json)]
     public class ProductsController : ControllerBase
     {

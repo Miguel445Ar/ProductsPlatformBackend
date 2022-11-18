@@ -1,9 +1,9 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
-using PruebaTecnica_Backend.ProductsPerOrders.Domain.Models;
 using PruebaTecnica_Backend.Products.Domain.Models;
 using PruebaTecnica_Backend.Shared.Extensions;
+using PruebaTecnica_Backend.Orders.Domain.Models;
 
 namespace PruebaTecnica_Backend.Shared.Persistence.Contexts
 {
@@ -15,7 +15,7 @@ namespace PruebaTecnica_Backend.Shared.Persistence.Contexts
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductPerOrder> ProductsPerOrders { get; set; }
+        public DbSet<Order> Orders { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -31,15 +31,19 @@ namespace PruebaTecnica_Backend.Shared.Persistence.Contexts
             builder.Entity<Product>().Property(p => p.Stock).IsRequired();
             builder.Entity<Product>().Property(p => p.UnitPrice).IsRequired();
 
-            builder.Entity<ProductPerOrder>().ToTable("ProductPerOrder");
-            builder.Entity<ProductPerOrder>().HasKey(ppo => new { ppo.ProductId, ppo.OrderId });
-            builder.Entity<ProductPerOrder>().Property(ppo => ppo.ProductId).IsRequired();
-            builder.Entity<ProductPerOrder>().Property(ppo => ppo.OrderId).IsRequired();
 
-            // Products - ProductsPerOrder
-            builder.Entity<ProductPerOrder>()
-                .HasOne(ppo => ppo.Product)
-                .WithMany(p => p.ProductsPerOrders);
+            builder.Entity<Order>().ToTable("Orders");
+            builder.Entity<Order>().HasKey(o => o.Id);
+            builder.Entity<Order>().Property(o => o.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Order>().Property(o => o.TotalPrice).IsRequired();
+            builder.Entity<Order>().Property(o => o.DeliveryDate).IsRequired();
+            builder.Entity<Order>().Property(o => o.RequestedUnits).IsRequired();
+
+            builder.Entity<Product>()
+                .HasMany(p => p.Orders)
+                .WithOne(o => o.Product)
+                .HasForeignKey(o => o.ProductsId);
+            
 
             builder.UseSnakeCaseNamingConvention();
         }

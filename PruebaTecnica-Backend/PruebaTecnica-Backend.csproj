@@ -17,10 +17,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Orders\" />
-    <Folder Include="ProductsPerOrders\Domain\Repositories\" />
-    <Folder Include="ProductsPerOrders\Domain\Services\" />
-  </ItemGroup>
-
 </Project>

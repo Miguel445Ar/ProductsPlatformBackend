@@ -7,6 +7,10 @@ using PruebaTecnica_Backend.Shared.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PruebaTecnica_Backend.Shared.Persistence.Contexts;
+using PruebaTecnica_Backend.Orders.Domain.Repositories;
+using PruebaTecnica_Backend.Orders.Persistance.Repositories;
+using PruebaTecnica_Backend.Orders.Domain.Services;
+using PruebaTecnica_Backend.Orders.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +41,8 @@ builder.Services.AddRouting(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddAutoMapper(
     typeof(PruebaTecnica_Backend.Shared.Mapping.ModelToResourceProfile),

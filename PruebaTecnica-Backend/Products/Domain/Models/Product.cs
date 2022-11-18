@@ -1,4 +1,4 @@
-﻿using PruebaTecnica_Backend.ProductsPerOrders.Domain.Models;
+﻿using PruebaTecnica_Backend.Orders.Domain.Models;
 
 namespace PruebaTecnica_Backend.Products.Domain.Models
 {
@@ -10,6 +10,6 @@ namespace PruebaTecnica_Backend.Products.Domain.Models
         public string Description { get; set; }
         public int Stock { get; set; }
         public float UnitPrice { get; set; }
-        public IList<ProductPerOrder> ProductsPerOrders { get; set; } = new List<ProductPerOrder>();
+        public IList<Order> Orders { get; set; } = new List<Order>();
     }
 }
