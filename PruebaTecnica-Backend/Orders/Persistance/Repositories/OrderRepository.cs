@@ -36,5 +36,10 @@ namespace PruebaTecnica_Backend.Orders.Persistance.Repositories
         {
             await _context.Orders.AddAsync(order);
         }
+
+        public void RemoveByProducstId(int id)
+        {
+            _context.Orders.Where(o => o.ProductsId == id).ExecuteDeleteAsync();
+        }
     }
 }

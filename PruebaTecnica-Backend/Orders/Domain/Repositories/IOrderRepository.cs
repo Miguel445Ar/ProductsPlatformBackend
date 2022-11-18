@@ -6,6 +6,7 @@ namespace PruebaTecnica_Backend.Orders.Domain.Repositories
     {
         Task<IEnumerable<Order>> ListAsync();
         Task AddAsync(Order order);
+        void RemoveByProducstId(int id);
         Task<Order> FindByIdAsync(int id);
         void Update(Order order);
         void Remove(Order order);

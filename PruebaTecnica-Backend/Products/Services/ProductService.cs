@@ -1,4 +1,5 @@
-﻿using PruebaTecnica_Backend.Products.Domain.Models;
+﻿using PruebaTecnica_Backend.Orders.Domain.Repositories;
+using PruebaTecnica_Backend.Products.Domain.Models;
 using PruebaTecnica_Backend.Products.Domain.Repositories;
 using PruebaTecnica_Backend.Products.Domain.Services;
 using PruebaTecnica_Backend.Products.Domain.Services.Communication;
@@ -10,11 +11,13 @@ namespace PruebaTecnica_Backend.Products.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IOrderRepository _orderRepository;
 
-        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork)
+        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IOrderRepository orderRepository)
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
+            _orderRepository = orderRepository;
         }
 
         public async Task<ProductResponse> DeleteAsync(int id)
@@ -24,13 +27,14 @@ namespace PruebaTecnica_Backend.Products.Services
                 return new ProductResponse("Product not found");
             try
             {
+                _orderRepository.RemoveByProducstId(existingProduct.Id);
                 _productRepository.Remove(existingProduct);
                 await _unitOfWork.CompleteAsync();
                 return new ProductResponse(existingProduct);
             }
             catch (Exception e)
             {
-                return new ProductResponse($"An error occurred while detecting the product: {e.Message}");
+                return new ProductResponse($"An error occurred while detecting the product: {e.Message} {e.InnerException.Message}");
             }
         }
 
