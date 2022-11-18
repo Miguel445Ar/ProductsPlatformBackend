@@ -14,7 +14,7 @@ namespace PruebaTecnica_Backend.Orders.Persistance.Repositories
         }
         public async Task<Order> FindByIdAsync(int id)
         {
-            return await _context.Orders.Include(o => o.Product).FirstAsync();
+            return await _context.Orders.FindAsync(id);
         }
 
         public async Task<IEnumerable<Order>> ListAsync()
